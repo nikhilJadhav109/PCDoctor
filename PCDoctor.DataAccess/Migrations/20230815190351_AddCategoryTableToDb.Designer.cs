@@ -4,15 +4,16 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PCDoctor.Data;
+
+using PCDoctor.DataAccess.Data;
 
 #nullable disable
 
-namespace PCDoctor.Migrations
+namespace PCDoctor.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230815195304_SeedDataIntoCategory")]
-    partial class SeedDataIntoCategory
+    [Migration("20230815190351_AddCategoryTableToDb")]
+    partial class AddCategoryTableToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,38 +43,6 @@ namespace PCDoctor.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DisplayOrder = 1,
-                            Name = "Mother Boards"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DisplayOrder = 2,
-                            Name = "Graphics Card"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DisplayOrder = 3,
-                            Name = "Hard Disks"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DisplayOrder = 4,
-                            Name = "SSD"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DisplayOrder = 4,
-                            Name = "CPU Cabinates"
-                        });
                 });
 #pragma warning restore 612, 618
         }

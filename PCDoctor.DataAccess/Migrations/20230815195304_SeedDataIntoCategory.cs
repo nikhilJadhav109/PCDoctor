@@ -4,28 +4,24 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace PCDoctor.Migrations
+namespace PCDoctor.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateCategories : Migration
+    public partial class SeedDataIntoCategory : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 5,
-                columns: new[] { "DisplayOrder", "Name" },
-                values: new object[] { 5, "PC Peripherals" });
-
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "DisplayOrder", "Name" },
                 values: new object[,]
                 {
-                    { 6, 6, "CPU Coolers" },
-                    { 7, 7, "Gaming Chairs" }
+                    { 1, 1, "Mother Boards" },
+                    { 2, 2, "Graphics Card" },
+                    { 3, 3, "Hard Disks" },
+                    { 4, 4, "SSD" },
+                    { 5, 4, "CPU Cabinates" }
                 });
         }
 
@@ -35,19 +31,27 @@ namespace PCDoctor.Migrations
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: 6);
+                keyValue: 1);
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: 7);
+                keyValue: 2);
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: 5,
-                columns: new[] { "DisplayOrder", "Name" },
-                values: new object[] { 4, "CPU Cabinates" });
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 5);
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace PCDoctor.Models
+namespace PCDoctor.Models.Models
 {
     public class ErrorViewModel
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PCDoctor.Models;
+
+using PCDoctor.Models.Models;
 using System.Diagnostics;
 
 namespace PCDoctor.Controllers

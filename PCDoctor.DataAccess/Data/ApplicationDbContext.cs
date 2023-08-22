@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PCDoctor.Models;
+﻿
+using Microsoft.EntityFrameworkCore;
+using PCDoctor.Models.Models;
 
-namespace PCDoctor.Data
+namespace PCDoctor.DataAccess.Data
 {
     public class ApplicationDbContext: DbContext
     {

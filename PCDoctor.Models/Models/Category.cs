@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace PCDoctor.Models
+namespace PCDoctor.Models.Models
 {
     public class Category
     {
@@ -10,7 +10,7 @@ namespace PCDoctor.Models
         [Required]
         [DisplayName("Category Name")]
         [MaxLength(30)]    
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [DisplayName("Display Order")]
         [Range(1,100)]

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace PCDoctor.Migrations
+namespace PCDoctor.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class AddCategoryTableToDb : Migration

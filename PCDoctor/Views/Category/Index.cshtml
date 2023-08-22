@@ -1,7 +1,6 @@
 ﻿@model List<Category>
-
 <div class="container">
-    <partial name="_Notification"/>
+    
     <div class="row pt-4 pb-4">
         <div class="col-6">
             <h4 class="text-uppercase text-secondary">Category List</h4>
@@ -9,7 +8,7 @@
         <div class="col-6 text-uppercase text-end ">
             <a asp-controller="Category" asp-action="CreateNewCategory" class="btn btn-danger ">
                 <i class="bi bi-patch-plus"></i>&nbsp Create new Category
-                </a>
+            </a>
         </div>
     </div>
     <table class="table table-striped">

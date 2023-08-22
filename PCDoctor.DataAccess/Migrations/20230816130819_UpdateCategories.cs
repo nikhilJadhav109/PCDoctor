@@ -4,24 +4,28 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace PCDoctor.Migrations
+namespace PCDoctor.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedDataIntoCategory : Migration
+    public partial class UpdateCategories : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.UpdateData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 5,
+                columns: new[] { "DisplayOrder", "Name" },
+                values: new object[] { 5, "PC Peripherals" });
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "DisplayOrder", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, "Mother Boards" },
-                    { 2, 2, "Graphics Card" },
-                    { 3, 3, "Hard Disks" },
-                    { 4, 4, "SSD" },
-                    { 5, 4, "CPU Cabinates" }
+                    { 6, 6, "CPU Coolers" },
+                    { 7, 7, "Gaming Chairs" }
                 });
         }
 
@@ -31,27 +35,19 @@ namespace PCDoctor.Migrations
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: 1);
+                keyValue: 6);
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: 2);
+                keyValue: 7);
 
-            migrationBuilder.DeleteData(
+            migrationBuilder.UpdateData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: 3);
-
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 4);
-
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 5);
+                keyValue: 5,
+                columns: new[] { "DisplayOrder", "Name" },
+                values: new object[] { 4, "CPU Cabinates" });
         }
     }
 }
