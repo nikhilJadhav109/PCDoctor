@@ -17,5 +17,6 @@ namespace PCDoctor.Models.Models
         public string? Manufacturer { get; set; }
         [Required]
         public int Price { get; set; }
+        
     }
 }
