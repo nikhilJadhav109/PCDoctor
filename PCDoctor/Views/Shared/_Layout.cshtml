@@ -23,18 +23,31 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+
+                        @* <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Category"  asp-action="Index">Categories</a>
+                        </li> *@                        
 
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Category" asp-action="Index">Categories</a>
+                            <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link nav-item dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Content Management
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Category" asp-action="Index">Categories</a>
+                                <li><hr class="dropdown-divider"></li>
 
+                            </ul>
+                        </li>
                     </ul>
+
+                    
+
                 </div>
             </div>
         </nav>
@@ -47,8 +60,8 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - PCDoctor - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container text-center">
+            <img /><i class="bi bi-suit-heart-fill"></i> &nbsp PCDoctor &nbsp <i class="bi bi-suit-heart-fill"></i>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
