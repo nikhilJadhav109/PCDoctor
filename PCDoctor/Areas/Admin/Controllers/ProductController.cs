@@ -37,7 +37,6 @@ namespace PCDoctor.Areas.Admin.Controllers
 
                 }),
                 Product = new Product(),
-
             };
             if (id == null || id == 0)
             {
@@ -129,7 +128,7 @@ namespace PCDoctor.Areas.Admin.Controllers
             return View();
         }
 */
-        public IActionResult Delete(int? id)
+        /*public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
             {
@@ -138,9 +137,9 @@ namespace PCDoctor.Areas.Admin.Controllers
             //reteriving Product object from database having same id as id passed to method
             Product? obj = _unitOfWork.Product.Get(o => o.Id == id);
             return View(obj);
-        }
+        }*/
 
-        [HttpPost, ActionName("Delete")]
+       /* [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
             Product? obj = _unitOfWork.Product.Get(o => o.Id == id);
@@ -152,9 +151,39 @@ namespace PCDoctor.Areas.Admin.Controllers
             _unitOfWork.Save();
             TempData["sucess"] = "Product Deleted Successfully";
             return RedirectToAction("Index");
+        }*/
+
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll( ) 
+        {
+            List<Product> AllProduct = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return Json(new {data = AllProduct });
         }
 
-
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var productToBeDeleted= _unitOfWork.Product.Get(product=>product.Id==id);
+            if (productToBeDeleted == null)
+            {
+                return Json(new { success = false,message="Error While Deleting" });
+            }
+            string productPath = Path.Combine(_webHostEnvironment.WebRootPath, @"images\products");
+            if (!string.IsNullOrEmpty(productToBeDeleted.ImageUrl))
+            {
+                //delete old Image path
+                var oldPath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
+                if (System.IO.File.Exists(oldPath))
+                {
+                    System.IO.File.Delete(oldPath);
+                }
+            }
+            _unitOfWork.Product.Remove(productToBeDeleted);
+            return Json(new { success = true, message = "Product Deleted Successfully" });
+        }
+        #endregion
 
 
     }
