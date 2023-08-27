@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PCDoctor.DataAccess.Repository.IRepository;
 using PCDoctor.Models.Models;
+using PCDoctor.Models.Models.ViewModels;
 using System.Collections.Generic;
 
 namespace PCDoctor.Areas.Admin.Controllers
@@ -25,17 +26,19 @@ namespace PCDoctor.Areas.Admin.Controllers
 
 
         public IActionResult CreateNewProduct()
-        {
-            //Reteriving data from Category Table
-            //                                          Projections : Converting Category object into SelectListItem Object  
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(obj => new SelectListItem
+        {           
+            ProductVM productVM = new ()
             {
-                Text = obj.Name,
-                Value = obj.Id.ToString()
+                CategoryList = _unitOfWork.Category.GetAll().Select(obj => new SelectListItem
+                {
+                    Text = obj.Name,
+                    Value = obj.Id.ToString()
 
-            });
-            ViewBag.CategoryList = CategoryList;
-            return View();
+                }),
+                Product = new Product(),
+                
+            };
+            return View(productVM);
         }
 
         [HttpPost]
