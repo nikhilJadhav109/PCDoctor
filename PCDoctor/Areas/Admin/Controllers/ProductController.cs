@@ -25,8 +25,8 @@ namespace PCDoctor.Areas.Admin.Controllers
 
 
 
-        public IActionResult CreateNewProduct()
-        {           
+        public IActionResult Upsert(int? id)
+        {
             ProductVM productVM = new ()
             {
                 CategoryList = _unitOfWork.Category.GetAll().Select(obj => new SelectListItem
@@ -38,11 +38,22 @@ namespace PCDoctor.Areas.Admin.Controllers
                 Product = new Product(),
                 
             };
-            return View(productVM);
+            if (id == null || id == 0)
+            {
+                //Create
+                return View(productVM);
+            }
+            else
+            {   
+                //Update
+                productVM.Product = _unitOfWork.Product.Get(o => o.Id == id); // Getting a single product from DB of Selected Id
+                return View(productVM);
+            }
+           
         }
 
         [HttpPost]
-        public IActionResult CreateNewProduct(ProductVM obj)
+        public IActionResult Upsert(ProductVM obj,IFormFile? file)
         {               
             if (ModelState.IsValid)
             {
@@ -57,7 +68,7 @@ namespace PCDoctor.Areas.Admin.Controllers
         }
 
 
-        public IActionResult Edit(int? id)
+        /*public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
             {
@@ -69,9 +80,9 @@ namespace PCDoctor.Areas.Admin.Controllers
                                                                       
 
             return View(obj);
-        }
+        }*/
 
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult Edit(Product obj)
         {
 
@@ -84,7 +95,7 @@ namespace PCDoctor.Areas.Admin.Controllers
             }
             return View();
         }
-
+*/
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
