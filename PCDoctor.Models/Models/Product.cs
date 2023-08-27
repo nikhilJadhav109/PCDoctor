@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PCDoctor.Models.Models
 {
@@ -17,6 +18,15 @@ namespace PCDoctor.Models.Models
         public string? Manufacturer { get; set; }
         [Required]
         public int Price { get; set; }
-        
+
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category? Category { get; set; }
+
+        public string? ImageUrl { get; set; }
+
+       
+
+
     }
 }

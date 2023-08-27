@@ -11,8 +11,8 @@ using PCDoctor.DataAccess.Data;
 namespace PCDoctor.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230822185251_AddProductToDb")]
-    partial class AddProductToDb
+    [Migration("20230823125846_seedDataIntoDatabase")]
+    partial class seedDataIntoDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace PCDoctor.DataAccess.Migrations
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            Name = "Mother Boards"
+                            Name = "CPU"
                         },
                         new
                         {
@@ -97,6 +97,9 @@ namespace PCDoctor.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -114,12 +117,15 @@ namespace PCDoctor.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Description = "Core Count= 6, Clock Speed= 3.7GHz, Boost Speed= 4.6GHz, TDP=65W,Integrated Graphics=None",
                             Manufacturer = "Intel",
                             Name = "Intel Core i5-13600K",
@@ -128,6 +134,7 @@ namespace PCDoctor.DataAccess.Migrations
                         new
                         {
                             Id = 2,
+                            CategoryId = 1,
                             Description = "Core Count= 16, Clock Speed= 4.7GHz, Boost Speed= 6GHz, TDP=65W,Integrated Graphics=Intel UHD Graphics 770",
                             Manufacturer = "Intel",
                             Name = "Intel Core i9-13900K",
@@ -136,6 +143,7 @@ namespace PCDoctor.DataAccess.Migrations
                         new
                         {
                             Id = 3,
+                            CategoryId = 1,
                             Description = "Core Count= 6, Clock Speed= 4.2GHz, Boost Speed= 6GHz, TDP=65W,Integrated Graphics=Radeon",
                             Manufacturer = "AMD",
                             Name = "AMD Ryzen 5 7600X",
@@ -144,6 +152,7 @@ namespace PCDoctor.DataAccess.Migrations
                         new
                         {
                             Id = 4,
+                            CategoryId = 1,
                             Description = "Core Count= 8, Clock Speed= 4.7GHz, Boost Speed= 5GHz, TDP=65W,Integrated Graphics=Intel UHD Graphics 770",
                             Manufacturer = "Intel",
                             Name = "Intel Core i7-13700K",
@@ -152,43 +161,23 @@ namespace PCDoctor.DataAccess.Migrations
                         new
                         {
                             Id = 5,
+                            CategoryId = 1,
                             Description = "Core Count= 8, Clock Speed= 3.7GHz, Boost Speed= 4GHz, TDP=120W,Integrated Graphics=Radeon",
                             Manufacturer = "AMD",
                             Name = "AMD Ryzen 7 5800X",
                             Price = 245
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Core Count= 16, Clock Speed= 3.4GHz, Boost Speed= 3.4GHz, TDP=105W,Integrated Graphics=Radeon",
-                            Manufacturer = "AMD",
-                            Name = "AMD Ryzen 7 7800X3D",
-                            Price = 435
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Core Count= 6, Clock Speed= 4.3GHz, Boost Speed= 4GHz, TDP=105W,Integrated Graphics=None",
-                            Manufacturer = "AMD",
-                            Name = "AMD Ryzen 5 5600X",
-                            Price = 100
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Core Count= 16, Clock Speed= 5.2GHz, Boost Speed= 6.7GHz, TDP=130W,Integrated Graphics=Intel UHD Graphics 770",
-                            Manufacturer = "Intel",
-                            Name = "Intel Core i7-12700K",
-                            Price = 412
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "Core Count= 8, Clock Speed= 4.7GHz, Boost Speed= 5GHz, TDP=65W,Integrated Graphics=Radeon",
-                            Manufacturer = "AMD",
-                            Name = "AMD Ryzen 7 5700X",
-                            Price = 242
                         });
+                });
+
+            modelBuilder.Entity("PCDoctor.Models.Models.Product", b =>
+                {
+                    b.HasOne("PCDoctor.Models.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

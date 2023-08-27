@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PCDoctor.DataAccess.Repository.IRepository;
 using PCDoctor.Models.Models;
+using System.Collections.Generic;
 
 namespace PCDoctor.Areas.Admin.Controllers
 {
@@ -16,14 +18,23 @@ namespace PCDoctor.Areas.Admin.Controllers
         public IActionResult Index()
         {
             //reteriving all categories from database
-            List<Product> AllCategories = _unitOfWork.Product.GetAll().ToList();
-            return View(AllCategories); //passing List<category> as model to View
+            List<Product> AllProduct = _unitOfWork.Product.GetAll().ToList();            
+            return View(AllProduct); //passing List<category> as model to View
         }
 
 
 
         public IActionResult CreateNewProduct()
         {
+            //Reteriving data from Category Table
+            //                                          Projections : Converting Category object into SelectListItem Object  
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(obj => new SelectListItem
+            {
+                Text = obj.Name,
+                Value = obj.Id.ToString()
+
+            });
+            ViewBag.CategoryList = CategoryList;
             return View();
         }
 

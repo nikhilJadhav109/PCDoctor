@@ -7,6 +7,7 @@ namespace PCDoctor.Models.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         [DisplayName("Category Name")]
         [MaxLength(30)]    
