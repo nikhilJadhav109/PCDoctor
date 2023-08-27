@@ -20,7 +20,20 @@ namespace PCDoctor.DataAccess.Repository
 
         public void Update(Product product)
         {
-            _db.Products.Update(product);
+            /*_db.Products.Update(product);*/
+            var fetchedProduct=_db.Products.FirstOrDefault(obj => obj.Id == product.Id);
+            if (fetchedProduct != null ) {
+
+                fetchedProduct.Name = product.Name;
+                fetchedProduct.Description = product.Description;   
+                fetchedProduct.Price = product.Price;
+                fetchedProduct.Manufacturer = product.Manufacturer;
+                if (product.ImageUrl != null)
+                {
+                    fetchedProduct.ImageUrl = product.ImageUrl;
+                }
+                
+            }
         }
     }
 }

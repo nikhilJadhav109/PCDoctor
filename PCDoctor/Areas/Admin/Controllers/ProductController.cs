@@ -20,7 +20,7 @@ namespace PCDoctor.Areas.Admin.Controllers
         public IActionResult Index()
         {
             //reteriving all categories from database
-            List<Product> AllProduct = _unitOfWork.Product.GetAll().ToList();
+            List<Product> AllProduct = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return View(AllProduct); //passing List<category> as model to View
         }
 
