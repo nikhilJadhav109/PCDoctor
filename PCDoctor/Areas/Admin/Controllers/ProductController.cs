@@ -42,12 +42,12 @@ namespace PCDoctor.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateNewProduct(Product obj)
+        public IActionResult CreateNewProduct(ProductVM obj)
         {               
             if (ModelState.IsValid)
             {
                 //Added new Createed Object in DataSet
-                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Product.Add(obj.Product);
                 //Saving Object from dataset in DB
                 _unitOfWork.Save();
                 TempData["sucess"] = "Product Created Successfully";
