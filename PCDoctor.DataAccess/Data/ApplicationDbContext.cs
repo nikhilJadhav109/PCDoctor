@@ -34,7 +34,8 @@ namespace PCDoctor.DataAccess.Data
                                 Description = "Core Count= 6, Clock Speed= 3.7GHz, Boost Speed= 4.6GHz, TDP=65W,Integrated Graphics=None",
                                 Manufacturer = "Intel", 
                                 Price = 345,
-                                CategoryId = 1
+                                CategoryId = 1,
+                                ImageUrl=""
                                
                             },
                 new Product {   Id = 2,  
@@ -43,7 +44,10 @@ namespace PCDoctor.DataAccess.Data
                                 Manufacturer = "Intel",     
                                 Price = 654,
                                 ImageUrl="",
-                                CategoryId = 1
+                                CategoryId = '1',
+
+                            
+                              
 
                 },
                 new Product {   Id = 3,
@@ -52,7 +56,8 @@ namespace PCDoctor.DataAccess.Data
                                 Manufacturer = "AMD", 
                                 Price = 343,                                
                                 ImageUrl = "",
-                                CategoryId = 1
+                                CategoryId = 1,
+                                
                 },
                 new Product {   Id = 4, 
                                 Name = "Intel Core i7-13700K", 
@@ -61,6 +66,7 @@ namespace PCDoctor.DataAccess.Data
                                 Price = 532,
                                 ImageUrl = "",
                                 CategoryId = 1
+                                
                 },
                 new Product {   Id = 5, 
                                 Name = "AMD Ryzen 7 5800X", 
@@ -69,6 +75,7 @@ namespace PCDoctor.DataAccess.Data
                                 Price = 245,
                                 ImageUrl = "",
                                 CategoryId = 1
+                               
                 }
                 );
         }

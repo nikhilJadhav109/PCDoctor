@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using PCDoctor.DataAccess.Repository.IRepository;
 using PCDoctor.Models.Models;
 using PCDoctor.Models.Models.ViewModels;
-using System.Collections.Generic;
 
 namespace PCDoctor.Areas.Admin.Controllers
 {
@@ -12,14 +11,16 @@ namespace PCDoctor.Areas.Admin.Controllers
     {
         //Creating Object of ApplicationDbContext class which make connection with Database
         private IUnitOfWork _unitOfWork;
-        public ProductController(IUnitOfWork _UnitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IUnitOfWork _UnitOfWork, IWebHostEnvironment _WebHostEnvironment)
         {
             _unitOfWork = _UnitOfWork;
+            _webHostEnvironment = _WebHostEnvironment;
         }
         public IActionResult Index()
         {
             //reteriving all categories from database
-            List<Product> AllProduct = _unitOfWork.Product.GetAll().ToList();            
+            List<Product> AllProduct = _unitOfWork.Product.GetAll().ToList();
             return View(AllProduct); //passing List<category> as model to View
         }
 
@@ -27,7 +28,7 @@ namespace PCDoctor.Areas.Admin.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            ProductVM productVM = new ()
+            ProductVM productVM = new()
             {
                 CategoryList = _unitOfWork.Category.GetAll().Select(obj => new SelectListItem
                 {
@@ -36,7 +37,7 @@ namespace PCDoctor.Areas.Admin.Controllers
 
                 }),
                 Product = new Product(),
-                
+
             };
             if (id == null || id == 0)
             {
@@ -44,21 +45,53 @@ namespace PCDoctor.Areas.Admin.Controllers
                 return View(productVM);
             }
             else
-            {   
+            {
                 //Update
                 productVM.Product = _unitOfWork.Product.Get(o => o.Id == id); // Getting a single product from DB of Selected Id
                 return View(productVM);
             }
-           
+
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductVM obj,IFormFile? file)
-        {               
+        public IActionResult Upsert(ProductVM obj, IFormFile? file)
+        {
             if (ModelState.IsValid)
             {
-                //Added new Createed Object in DataSet
-                _unitOfWork.Product.Add(obj.Product);
+                //gettint root folder path
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\products");
+                    if (!string.IsNullOrEmpty(obj.Product.ImageUrl))
+                    {
+                        //delete old Image path
+                        var oldPath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldPath))
+                        {
+                            System.IO.File.Delete(oldPath);
+                        }
+                    }
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    obj.Product.ImageUrl = @"\images\products\" + fileName;
+                }
+
+                if (obj.Product.Id == 0)
+                {
+                    //Added new Createed Object in DataSet
+                    _unitOfWork.Product.Add(obj.Product);
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(obj.Product);
+                }
+
+
                 //Saving Object from dataset in DB
                 _unitOfWork.Save();
                 TempData["sucess"] = "Product Created Successfully";

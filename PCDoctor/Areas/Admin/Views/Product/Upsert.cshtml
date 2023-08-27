@@ -3,76 +3,98 @@
 
 <form method="post" enctype="multipart/form-data">
     <input asp-for="Product.Id" hidden />
-    <div class="pt-3 mt-5 ">
-        <div class="row pb-2">
-            <h3 class="text-uppercase text-secondary p-0">@(Model.Product.Id != 0 ? "Update" : "Create")&nbsp Product</h3>
-            <hr />
-        </div>
+    <input asp-for="Product.ImageUrl" hidden />
+    <div class="row">
+        <div class="col-10">
+            <div class="pt-3 mt-5 ">
+                <div class="row pb-2">
+                    <h3 class="text-uppercase text-secondary p-0">@(Model.Product.Id != 0 ? "Update" : "Create")&nbsp Product</h3>
+                    <hr />
+                </div>
 
-        <div class="form-group row ">
-            <label asp-for="Product.Name" class="form-label p-0"> </label>
-            <input asp-for="Product.Name" class="form-control" placeholder="Product Name" />
-            <span asp-validation-for="Product.Name" class="text-danger"></span>
-        </div>
+                <div class="form-group row ">
+                    <label asp-for="Product.Name" class="form-label p-0"> </label>
+                    <input asp-for="Product.Name" class="form-control" placeholder="Product Name" />
+                    <span asp-validation-for="Product.Name" class="text-danger"></span>
+                </div>
 
-        <div class="form-group row">
-            <label asp-for="Product.Description" class="form-label mt-4 p-0"></label>
-            <input asp-for="Product.Description" class="form-control" placeholder="Description" />
-            <span asp-validation-for="Product.Description" class="text-danger"></span>
-        </div>
+                <div class="form-group row">
+                    <label asp-for="Product.Description" class="form-label mt-4 p-0"></label>
+                    <textarea asp-for="Product.Description" class="form-control" placeholder="Description"></textarea>
+                    <span asp-validation-for="Product.Description" class="text-danger"></span>
+                </div>
 
-        <div class="form-group row">
-            <label asp-for="Product.Manufacturer" class="form-label mt-4 p-0"></label>
-            <input asp-for="Product.Manufacturer" class="form-control" placeholder="Manufacturer" />
-            <span asp-validation-for="Product.Manufacturer" class="text-danger"></span>
-        </div>
+                <div class="form-group row">
+                    <label asp-for="Product.Manufacturer" class="form-label mt-4 p-0"></label>
+                    <input asp-for="Product.Manufacturer" class="form-control" placeholder="Manufacturer" />
+                    <span asp-validation-for="Product.Manufacturer" class="text-danger"></span>
+                </div>
 
-        <div class="form-group row">
-            <label asp-for="Product.Price" class="form-label mt-4 p-0"></label>
-            <input asp-for="Product.Price" class="form-control" placeholder="Price" />
-            <span asp-validation-for="Product.Price" class="text-danger"></span>
-        </div>
-
-
-        <div class="form-group row">
-            <label asp-for="Product.ImageUrl" class="form-label mt-4 p-0"></label>
-            <input type="file" class="form-control" placeholder="Price" />
-            <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="@Model.Product.CategoryId" class="form-label mt-4 p-0"></label>
-            <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList" class="form-select">
-                <option selected disabled>Select Category</option>
-            </select>                      
-            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
-        </div>
+                <div class="form-group row">
+                    <label asp-for="Product.Price" class="form-label mt-4 p-0"></label>
+                    <input asp-for="Product.Price" class="form-control" placeholder="Price" />
+                    <span asp-validation-for="Product.Price" class="text-danger"></span>
+                </div>
 
 
-        <div class="row mt-4">
-            <div class="col-6 col-md-3 ">
-                @if(Model.Product.Id == 0)
-                {
-                    <button type="submit" class="btn btn-outline-primary form-control ">Create</button>
-                }
-                else
-                {
-                    <button type="submit" class="btn btn-outline-primary form-control ">Update</button>
-                }
-               
+                <div class="form-group row">
+                    <label asp-for="Product.ImageUrl" class="form-label mt-4 p-0"></label>
+                    <input type="file" name="file" class="form-control" placeholder="Image" />
+                    <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="@Model.Product.CategoryId" class="form-label mt-4 p-0"></label>
+                    <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+                        <option selected disabled>Select Category</option>
+                    </select>
+                    <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                </div>
+
+
+                <div class="row mt-4">
+                    <div class="col-6 col-md-3 ">
+                        @if (Model.Product.Id == 0)
+                        {
+                            <button type="submit" class="btn btn-outline-primary form-control ">Create</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-outline-primary form-control ">Update</button>
+                        }
+
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-light form-control ">Back To List</a>
+                    </div>
+                </div>
+
             </div>
-
-            <div class="col-6 col-md-3">
-                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-light form-control ">Back To List</a>
-            </div>
         </div>
+        <div class="col-2">
 
+        <img src="@Model.Product.ImageUrl" width="100%" style="border-radius:5px ; border:1px solid #ffffff" />
+        </div>
+        
     </div>
+
+    
 </form>
 
 
 @* script tag to add client side validation *@
 @section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: ' tinycomments mentions anchor autolink  emoticons  link lists  searchreplace  wordcount checklist  casechange  advtemplate advtable advcode editimage tableofcontents mergetags   autocorrect  typography',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',            
+            
+            
+        });
+    </script>
     @{
         <partial name="_ValidationScriptsPartial" />
     }
